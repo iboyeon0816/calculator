@@ -8,9 +8,16 @@ public class InputParser {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    public int getUserNumber() {
-        System.out.print("수를 입력하세요. (0 이상의 정수): ");
-        return scanner.nextInt();
+    public Number getUserNumber() {
+        System.out.print("수를 입력하세요. : ");
+        String input = scanner.next();
+
+        if (input.contains(".")) {
+            return Double.parseDouble(input);
+        }
+        else {
+            return Long.parseLong(input);
+        }
     }
 
     public OperatorType getUserOperator() {
@@ -26,10 +33,10 @@ public class InputParser {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 연산자를 입력하였습니다."));
     }
 
-    public String getExitOrContinue() {
+    public boolean isExit() {
         System.out.print("계속하시겠습니까? (끝내시려면 exit을 입력하세요.): ");
-        String str = scanner.next();
+        String input = scanner.next();
         System.out.println();
-        return str;
+        return "exit".equals(input);
     }
 }

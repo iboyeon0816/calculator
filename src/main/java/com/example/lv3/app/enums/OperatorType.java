@@ -5,17 +5,21 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 
 public enum OperatorType {
-    ADD('+', Double::sum),
-    SUBTRACT('-', (num1, num2) -> num1 - num2),
-    MULTIPLY('*', (num1, num2) -> num1 * num2),
-    DIVIDE('/', (num1, num2) -> num1 / num2);
+    ADD('+', Double::sum, Long::sum),
+    SUBTRACT('-', (num1, num2) -> num1 - num2, (num1, num2) -> num1 - num2),
+    MULTIPLY('*', (num1, num2) -> num1 * num2, (num1, num2) -> num1 * num2),
+    DIVIDE('/', (num1, num2) -> num1 / num2, (num1, num2) -> num1 / num2);
 
     private final char symbol;
-    private final BiFunction<Double, Double, Double> expression;
+    private final BiFunction<Double, Double, Double> doubleExpression;
+    private final BiFunction<Long, Long, Long> longExpression;
 
-    OperatorType(char symbol, BiFunction<Double, Double, Double> expression) {
+    OperatorType(char symbol,
+                 BiFunction<Double, Double, Double> doubleExpression,
+                 BiFunction<Long, Long, Long> longExpression) {
         this.symbol = symbol;
-        this.expression = expression;
+        this.doubleExpression = doubleExpression;
+        this.longExpression = longExpression;
     }
 
     public static Optional<OperatorType> findBySymbol(char symbol) {
@@ -25,6 +29,10 @@ public enum OperatorType {
     }
 
     public double evaluate(double num1, double num2) {
-        return this.expression.apply(num1, num2);
+        return doubleExpression.apply(num1, num2);
+    }
+
+    public long evaluate(long num1, long num2) {
+        return longExpression.apply(num1, num2);
     }
 }
