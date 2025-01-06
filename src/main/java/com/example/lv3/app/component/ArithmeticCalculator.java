@@ -2,12 +2,12 @@ package com.example.lv3.app.component;
 
 import com.example.lv3.app.enums.OperatorType;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ArithmeticCalculator {
 
-    private Queue<Double> resultQueue = new LinkedList<>();
+    private final List<Double> resultList = new ArrayList<>();
 
     public double calculate(int num1, int num2, OperatorType operator) {
         if (OperatorType.DIVIDE.equals(operator) && num2 == 0) {
@@ -20,19 +20,19 @@ public class ArithmeticCalculator {
             case MULTIPLY -> num1 * num2;
             case DIVIDE -> num1 / (double) num2;
         };
-        resultQueue.add(result);
+
+        resultList.add(result);
+
         return result;
     }
 
-    public Double poll() {
-        return resultQueue.poll();
+    public Double removeFirst() {
+        return resultList.remove(0);
     }
 
-    public Queue<Double> getResultQueue() {
-        return resultQueue;
-    }
-
-    public void setResultQueue(Queue<Double> resultQueue) {
-        this.resultQueue = resultQueue;
+    public List<Double> getResultsGreaterThan(int num) {
+        return resultList.stream()
+                .filter(d -> d > num)
+                .toList();
     }
 }
