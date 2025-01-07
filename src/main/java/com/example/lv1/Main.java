@@ -1,58 +1,81 @@
 package com.example.lv1;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
-        boolean isContinue = true;
-        while(isContinue) {
-            isContinue = calculate(sc);
+    private static final Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        boolean isExit = false;
+
+        while(!isExit) {
+            System.out.println("사칙 연산을 시작합니다.");
+
+            int num1 = getNumber();
+            String operator = getOperator();
+            int num2 = getNumber();
+
+            if (operator.equals("/") && num2 == 0) {
+                System.out.println("0으로 나눌 수 없습니다. 연산을 처음부터 다시 시작합니다.\n");
+                continue;
+            }
+
+            double result = switch (operator) {
+                case "+" -> num1 + num2;
+                case "-" -> num1 - num2;
+                case "*" -> num1 * num2;
+                case "/" -> num1 / (double) num2;
+                default -> 0;
+            };
+
+            System.out.println("[SUCCESS] 계산 결과: " + result + "\n");
+
+            isExit = getIsExit();
         }
     }
 
-    private static boolean calculate(Scanner sc) {
-        System.out.println("사칙 연산을 시작합니다.");
+    private static int getNumber() {
+        boolean isValidNumber = false;
+        int input = 0;
 
-        System.out.print("첫 번째 수를 입력하세요. (0 이상의 정수): ");
-        int num1 = sc.nextInt();
-        System.out.print("사칙 연산 기호를 입력하세요. (+, -, *, /): ");
-        String operator = sc.next();
-        System.out.print("두 번째 수를 입력하세요. (0 이상의 정수): ");
-        int num2 = sc.nextInt();
-
-        double result;
-        switch (operator) {
-            case "+":
-                result = num1 + num2;
-                break;
-            case "-":
-                result = num1 - num2;
-                break;
-            case "*":
-                result = num1 * num2;
-                break;
-            case "/":
-                if (num2 == 0) {
-                    System.out.println("[ERROR] 0으로 나눌 수 없습니다.");
-                    System.out.println();
-                    return true;
-                }
-                result = num1 / (double) num2;
-                break;
-            default:
-                System.out.println("[ERROR] 잘못된 연산자를 입력하였습니다.");
-                System.out.println();
-                return true;
+        while (!isValidNumber) {
+            try {
+                System.out.print("피연산자를 입력하세요. (0 이상의 정수): ");
+                input = sc.nextInt();
+                isValidNumber = true;
+            } catch (InputMismatchException e) {
+                System.out.println("잘못된 형식의 입력입니다. 0 이상의 정수만 입력해주세요.\n");
+                sc.next();
+            }
         }
-        System.out.println("[SUCCESS] " + num1 + " " + operator + " " + num2 + " = " + result);
-        System.out.println();
 
+        return input;
+    }
+
+    private static String getOperator() {
+        boolean isValidOperator = false;
+        String input = "";
+
+        while (!isValidOperator) {
+            System.out.print("사칙 연산 기호를 입력하세요. (+, -, *, /): ");
+            input = sc.next();
+            if (!input.matches("[+\\-*/]")) {
+                System.out.println("잘못된 형식의 입력입니다. +, -, *, /만 입력할 수 있습니다.\n");
+            }
+            else {
+                isValidOperator = true;
+            }
+        }
+
+        return input;
+    }
+
+    private static boolean getIsExit() {
         System.out.print("계속하시겠습니까? (끝내시려면 exit을 입력하세요.): ");
-        String str = sc.next();
+        String input = sc.next();
         System.out.println();
-
-        return !"exit".equals(str);
+        return "exit".equals(input);
     }
 }
