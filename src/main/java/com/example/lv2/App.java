@@ -37,7 +37,7 @@ public class App {
             System.out.println("지금까지의 계산 결과를 출력합니다.");
             printResults(resultQueue);
 
-            System.out.println("첫 번째 계산 결과를 지웁니다.");
+            System.out.println("\n첫 번째 계산 결과를 지웁니다.");
             Double removedResult = calculator.poll();
             System.out.println("제거된 값: " + removedResult + "\n");
 

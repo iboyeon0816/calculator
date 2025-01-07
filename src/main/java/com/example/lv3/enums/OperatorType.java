@@ -1,4 +1,4 @@
-package com.example.lv3.app.enums;
+package com.example.lv3.enums;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -8,7 +8,7 @@ public enum OperatorType {
     ADD('+', Double::sum, Long::sum),
     SUBTRACT('-', (num1, num2) -> num1 - num2, (num1, num2) -> num1 - num2),
     MULTIPLY('*', (num1, num2) -> num1 * num2, (num1, num2) -> num1 * num2),
-    DIVIDE('/', (num1, num2) -> num1 / num2, (num1, num2) -> num1 / num2);
+    DIVIDE('/', (num1, num2) -> num1 / num2, (num1, num2) -> { throw new IllegalStateException(); });
 
     private final char symbol;
     private final BiFunction<Double, Double, Double> doubleExpression;
