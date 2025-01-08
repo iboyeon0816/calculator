@@ -14,16 +14,8 @@ public class ArithmeticCalculator <T extends Number> {
             throw new ArithmeticException();
         }
 
-        Number result;
-        if (num1 instanceof Long) {
-            result = operator.evaluate(num1.longValue(), num2.longValue());
-        }
-        else {
-            result = operator.evaluate(num1.doubleValue(), num2.doubleValue());
-        }
-
+        Number result = operator.evaluate(num1, num2);
         resultList.add(result);
-
         return result;
     }
 

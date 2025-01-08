@@ -28,11 +28,11 @@ public enum OperatorType {
                 .findFirst();
     }
 
-    public double evaluate(double num1, double num2) {
-        return doubleExpression.apply(num1, num2);
-    }
-
-    public long evaluate(long num1, long num2) {
-        return longExpression.apply(num1, num2);
+    public Number evaluate(Number num1, Number num2) {
+        if (num1 instanceof Long) {
+            return longExpression.apply(num1.longValue(), num2.longValue());
+        } else {
+            return doubleExpression.apply(num1.doubleValue(), num2.doubleValue());
+        }
     }
 }
