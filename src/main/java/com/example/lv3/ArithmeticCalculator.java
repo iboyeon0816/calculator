@@ -21,7 +21,14 @@ public class ArithmeticCalculator <T extends Number> {
 
     public List<Number> getResultsGreaterThan(Number num) {
         return resultList.stream()
-                .filter(d -> d.doubleValue() > num.doubleValue())
+                .filter(r -> {
+                    if (r instanceof Long && num instanceof Long) {
+                        return r.longValue() > num.longValue();
+                    }
+                    else {
+                        return r.doubleValue() > num.doubleValue();
+                    }
+                })
                 .toList();
     }
 }

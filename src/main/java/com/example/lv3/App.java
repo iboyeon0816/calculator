@@ -45,10 +45,6 @@ public class App {
         printResults(doubleCalculator.getResultsGreaterThan(num));
     }
 
-    private static void printResults(List<Number> resultList) {
-        resultList.forEach(n -> System.out.print(n + " "));
-    }
-
     private static Number getNumber() {
         boolean isValid = false;
         Number inputNum = 0;
@@ -98,4 +94,7 @@ public class App {
         return "exit".equals(input);
     }
 
+    private static void printResults(List<Number> resultList) {
+        resultList.forEach(n -> System.out.print(n + " "));
+    }
 }
